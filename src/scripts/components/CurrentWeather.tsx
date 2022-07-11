@@ -23,7 +23,7 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
         <WeatherItemLoading icon='opacity' subject='Loading...' />
         <WeatherItemLoading icon='light_mode' subject='Loading...' />
         <WeatherItemLoading icon='speed' subject='Loading...' />
-        <CreditsItem />
+        {/*<CreditsItem />*/}
       </div>
     );
   }
@@ -44,33 +44,33 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
         subject='Temperature'
         temp={props.weather.imperial.temp || '0'}
         tempFeel={tempFeel}
-        unit='imperial'
+        unit='metric'
       />
       <WeatherItem
         subject='Rain Gage'
         icon='water_drop'
         rain={props.weather.imperial.precipTotal || '0'}
         rainRate={props.weather.imperial.percipRate || '0'}
-        unit='imperial'
+        unit='metric'
       />
       <WeatherItem
         subject='Wind'
         icon='air'
-        unit='imperial'
+        unit='metric'
         windGust={props.weather.imperial.windGust || '0'}
         windSpeed={props.weather.imperial.windSpeed || '0'}
       />
       <WeatherItem
         subject='Wind Direction'
         icon='flag'
-        unit='imperial'
+        unit='metric'
         windDir={props.weather.winddir || 0}
       />
       <WeatherItem
         subject='Humidity'
         icon='water_drop'
         humidity={props.weather.humidity || '0'}
-        unit='imperial'
+        unit='metric'
         error={
           props.weather.humidity === 1 ? 'Hardware malfunction.' : undefined
         }
@@ -79,13 +79,7 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
         subject='Dew Point'
         icon='opacity'
         dewPoint={props.weather.imperial.dewpt || '0'}
-        unit='imperial'
-      />
-      <WeatherItem
-        subject='UV Index'
-        icon='light_mode'
-        unit='imperial'
-        uv={props.weather.uv || '0'}
+        unit='metric'
       />
       <WeatherItem
         subject='Air Pressure'
@@ -93,27 +87,26 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
         pressure={props.weather.imperial.pressure || '0'}
         unit='imperial'
       />
-      <CreditsItem />
     </div>
   );
 }
 
-const CreditsItem = () => {
-  return (
-    <div className='credits'>
-      <h2>Website Credits</h2>
-      <span aria-hidden='true' className='material-icons-outlined'>
-        live_help
-      </span>
-      <p>
-        API by <a href={'https://www.wunderground.com/'}>Wunderground</a>
-      </p>
-      <p>
-        Website by <a href={'https://www.becky.dev/'}>Becky Pollard</a>
-      </p>
-    </div>
-  );
-};
+// const CreditsItem = () => {
+//   return (
+//     <div className='credits'>
+//       <h2>Website Credits</h2>
+//       <span aria-hidden='true' className='material-icons-outlined'>
+//         live_help
+//       </span>
+//       <p>
+//         API by <a href={'https://www.wunderground.com/'}>Wunderground</a>
+//       </p>
+//       <p>
+//         Website by <a href={'https://www.becky.dev/'}>Becky Pollard</a>
+//       </p>
+//     </div>
+//   );
+// };
 
 type WeatherItemLoadingProps = {
   icon: string;
@@ -217,8 +210,8 @@ const WeatherItem = (props: WeatherItemProps) => {
 
       {props.temp && props.tempFeel ? (
         <>
-          <p>{`${props.temp}°F / ${convertToCelsius(props.temp)}°C`}</p>
-          <p>{`feels like ${props.tempFeel}°F or ${convertToCelsius(
+          <p>{`${convertToCelsius(props.temp)}°C`}</p>
+          <p>{`feels like ${convertToCelsius(
             props.temp
           )}°C`}</p>
         </>
@@ -266,7 +259,7 @@ const WeatherItem = (props: WeatherItemProps) => {
 
       {props.dewPoint ? (
         <>
-          <p>{`${props.dewPoint}°F / ${convertToCelsius(props.dewPoint)}°C`}</p>
+          <p>{`${convertToCelsius(props.dewPoint)}°C`}</p>
         </>
       ) : null}
 
