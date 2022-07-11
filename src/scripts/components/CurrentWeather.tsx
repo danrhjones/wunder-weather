@@ -11,6 +11,10 @@ const convertToHpa = (f: string | number) => {
     return (+f / 0.029529980164712).toFixed(2)
 }
 
+const convertInchesToMm = (f: string | number) => {
+    return (+f / 25.4).toFixed(2)
+}
+
 type CurrentWeatherProps = {
   time?: Date;
   weather?: Weather;
@@ -22,7 +26,7 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
         <WeatherItemLoading icon='thermostat' subject='Loading...' />
         <WeatherItemLoading icon='water_drop' subject='Loading...' />
         <WeatherItemLoading icon='air' subject='Loading...' />
-        <WeatherItemLoading icon='flag' subject='Loading...' />
+        <WeatherItemLoading icon='explore' subject='Loading...' />
         <WeatherItemLoading icon='water_drop' subject='Loading...' />
         <WeatherItemLoading icon='opacity' subject='Loading...' />
         <WeatherItemLoading icon='light_mode' subject='Loading...' />
@@ -51,7 +55,7 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
         unit='metric'
       />
       <WeatherItem
-        subject='Rain Gage'
+        subject='Rain'
         icon='water_drop'
         rain={props.weather.imperial.precipTotal || '0'}
         rainRate={props.weather.imperial.percipRate || '0'}
@@ -66,7 +70,7 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
       />
       <WeatherItem
         subject='Wind Direction'
-        icon='flag'
+        icon='explore'
         unit='metric'
         windDir={props.weather.winddir || 0}
       />
@@ -122,7 +126,7 @@ const WeatherItemLoading = (props: WeatherItemLoadingProps) => {
       <h2>{props.subject}</h2>
       <span
         aria-hidden='true'
-        className={`material-icons${props.icon !== 'flag' ? '-outlined' : ''}`}
+        className={`material-icons${props.icon !== 'explore' ? '-outlined' : ''}`}
       >
         {props.icon}
       </span>
@@ -152,52 +156,52 @@ const WeatherItem = (props: WeatherItemProps) => {
   const windDirection = (dir: number) => {
     if ((dir > 349 && dir <= 360) || dir <= 11) {
       //N
-      return 'N';
+      return 'North';
     } else if (dir > 11 && dir <= 34) {
       //NNE
-      return 'NNE';
+      return 'North North East';
     } else if (dir > 34 && dir <= 56) {
       //NE
-      return 'NE';
+      return 'North Eeast';
     } else if (dir > 56 && dir <= 79) {
       //ENE
-      return 'ENE';
+      return 'East North East';
     } else if (dir > 79 && dir <= 101) {
       //E
-      return 'E';
+      return 'East';
     } else if (dir > 101 && dir <= 124) {
       //ESE
-      return 'ESE';
+      return 'East South East';
     } else if (dir > 124 && dir <= 146) {
       //SE
-      return 'SE';
+      return 'South East';
     } else if (dir > 146 && dir <= 169) {
       //SSE
-      return 'SSE';
+      return 'South South East';
     } else if (dir > 169 && dir <= 191) {
       //S
-      return 'S';
+      return 'South';
     } else if (dir > 191 && dir <= 214) {
       //SSW
-      return 'SSW';
+      return 'South South West';
     } else if (dir > 214 && dir <= 236) {
       //SW
-      return 'SW';
+      return 'South West';
     } else if (dir > 236 && dir <= 259) {
       //WSW
-      return 'WSW';
+      return 'West South West';
     } else if (dir > 259 && dir <= 281) {
       //W
-      return 'W';
+      return 'West';
     } else if (dir > 281 && dir <= 304) {
       //WNW
-      return 'WNW';
+      return 'West North West';
     } else if (dir > 304 && dir <= 326) {
       //NW
-      return 'NW';
+      return 'North West';
     } else if (dir > 326 && dir <= 349) {
       //NNW
-      return 'NW';
+      return 'North North West';
     }
     return 'ERROR';
   };
@@ -207,7 +211,7 @@ const WeatherItem = (props: WeatherItemProps) => {
       <h2>{props.subject}</h2>
       <span
         aria-hidden='true'
-        className={`material-icons${props.icon !== 'flag' ? '-outlined' : ''}`}
+        className={`material-icons${props.icon !== 'explore' ? '-outlined' : ''}`}
       >
         {props.icon}
       </span>
@@ -223,9 +227,9 @@ const WeatherItem = (props: WeatherItemProps) => {
 
       {props.rain && props.rainRate ? (
         <>
-          <p>{`${props.rain} in`}</p>
+          <p>{`${convertInchesToMm(props.rain)} mm`}</p>
           <p>
-            {props.rainRate !== '0' ?? `at a rate of ${props.rainRate} in/hr`}
+              {props.rainRate == 0 ? '' : `at a rate of ${convertInchesToMm(props.rainRate)} mm/hr` }
           </p>
         </>
       ) : null}
