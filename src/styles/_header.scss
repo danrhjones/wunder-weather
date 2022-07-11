@@ -1,0 +1,16 @@
+header {
+  border-bottom: 5px solid rgba(var(--colour-rgb), 0.4);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  p {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    &:not(:last-of-type) {
+      padding-right: 4rem;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+html {
+	font-size: 62.5%; /* = 10px on browser defaults*/
+}
+body {
+  font-size: 1.6rem; /* = 16px on browser defaults */
+  font-family: sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  display: block;
+  width: 100%;
+}
+h1 {
+  font-size: 2.6rem;
+}
+
+a {
+  color: var(--colour);
+}
+
+.material-icons, .material-icons-outlined {
+	vertical-align: middle;
+	user-select: none;
+	-moz-user-select: none;
+}

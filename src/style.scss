@@ -1,0 +1,103 @@
+@import './styles/meyerReset.scss';
+@import './styles/typography.scss';
+@import './styles/header.scss';
+
+body {
+  background: #222;
+  --colour: #666;
+  transition: background ease 1s;
+  background: var(--colour); //fallback
+}
+
+.theme- {
+  &day-clear {
+    --colour: #1c92d2;
+    --text: #002341;
+    color: var(--text);
+    background: var(--colour); //fallback
+    background: -webkit-linear-gradient(-140deg, #f2fcfe, var(--colour)) fixed no-repeat;
+    background: linear-gradient(-140deg, #f2fcfe, var(--colour)) fixed no-repeat;
+  }
+  &day-cloudy {
+    --colour: #37789b;
+    --text: #0d3449;
+    color: var(--text);
+    background: var(--colour); //fallback
+    background: -webkit-linear-gradient(-160deg, #c7d3e2, var(--colour)) fixed no-repeat;
+    background: linear-gradient(-160deg, #c7d3e2, var(--colour)) fixed no-repeat;
+  }
+  &night {
+    --colour: #350a66;
+    --text: #210542;
+    color: var(--text);
+    background: var(--colour); //fallback
+    background: -webkit-linear-gradient(-140deg, #b383ff, var(--colour)) fixed no-repeat;
+    background: linear-gradient(190deg, #b383ff, var(--colour)) fixed no-repeat;
+  }
+}
+  
+  
+.wrapper {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.weather-report {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+  grid-gap: 20px;
+  width: 100%;
+}
+
+.item, .credits {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.2rem;
+  min-height: 13rem;
+
+  h2 {
+    color: var(--colour);
+    text-align: left;
+    // width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  span {
+    color: var(--colour);
+    font-size: 5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.item {
+  p:first-of-type:not(.itemErrorText) {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+&.itemError {
+  opacity: 0.6;
+  background-color: #007ebdb3;
+  
+    >* {
+      color: #000;
+    }
+
+  .itemErrorText {
+    margin-top: 0.6rem;
+    font-size: 1.2rem;
+  }
+}
+}
+
+.credits {
+  span {
+    margin-bottom: 1.5rem;
+  }
+  p:not(:last-of-type) {
+    margin-bottom: 0.5rem;
+  }
+}
