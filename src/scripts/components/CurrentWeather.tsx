@@ -31,7 +31,6 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
         <WeatherItemLoading icon='opacity' subject='Loading...' />
         <WeatherItemLoading icon='light_mode' subject='Loading...' />
         <WeatherItemLoading icon='speed' subject='Loading...' />
-        {/*<CreditsItem />*/}
       </div>
     );
   }
@@ -99,22 +98,6 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
   );
 }
 
-// const CreditsItem = () => {
-//   return (
-//     <div className='credits'>
-//       <h2>Website Credits</h2>
-//       <span aria-hidden='true' className='material-icons-outlined'>
-//         live_help
-//       </span>
-//       <p>
-//         API by <a href={'https://www.wunderground.com/'}>Wunderground</a>
-//       </p>
-//       <p>
-//         Website by <a href={'https://www.becky.dev/'}>Becky Pollard</a>
-//       </p>
-//     </div>
-//   );
-// };
 
 type WeatherItemLoadingProps = {
   icon: string;
@@ -155,52 +138,36 @@ type WeatherItemProps = {
 const WeatherItem = (props: WeatherItemProps) => {
   const windDirection = (dir: number) => {
     if ((dir > 349 && dir <= 360) || dir <= 11) {
-      //N
       return 'North';
     } else if (dir > 11 && dir <= 34) {
-      //NNE
       return 'North North East';
     } else if (dir > 34 && dir <= 56) {
-      //NE
-      return 'North Eeast';
+      return 'North East';
     } else if (dir > 56 && dir <= 79) {
-      //ENE
       return 'East North East';
     } else if (dir > 79 && dir <= 101) {
-      //E
       return 'East';
     } else if (dir > 101 && dir <= 124) {
-      //ESE
       return 'East South East';
     } else if (dir > 124 && dir <= 146) {
-      //SE
       return 'South East';
     } else if (dir > 146 && dir <= 169) {
-      //SSE
       return 'South South East';
     } else if (dir > 169 && dir <= 191) {
-      //S
       return 'South';
     } else if (dir > 191 && dir <= 214) {
-      //SSW
       return 'South South West';
     } else if (dir > 214 && dir <= 236) {
-      //SW
       return 'South West';
     } else if (dir > 236 && dir <= 259) {
-      //WSW
       return 'West South West';
     } else if (dir > 259 && dir <= 281) {
-      //W
       return 'West';
     } else if (dir > 281 && dir <= 304) {
-      //WNW
       return 'West North West';
     } else if (dir > 304 && dir <= 326) {
-      //NW
       return 'North West';
     } else if (dir > 326 && dir <= 349) {
-      //NNW
       return 'North North West';
     }
     return 'ERROR';
@@ -218,7 +185,9 @@ const WeatherItem = (props: WeatherItemProps) => {
 
       {props.temp && props.tempFeel ? (
         <>
-          <p>{`${convertToCelsius(props.temp)}°C`}</p>
+            <p>{props.temp > 20 ?  'yikes' : 'nope'}</p>
+            <div style={isMarginNeeded ? {marginTop:10} : {}} />
+            <p>{`${convertToCelsius(props.temp)}°C`}</p>
           <p>{`feels like ${convertToCelsius(
             props.temp
           )}°C`}</p>
