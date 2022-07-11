@@ -11,7 +11,7 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
     : '';
   return (
     <header>
-        <h1>Pollard Farm</h1>
+        <h1>Pitstone</h1>
         {props.station
           ? <p>Weather Station: <a href={`https://www.wunderground.com/dashboard/pws/${props.station}`}>
               {props.station}
