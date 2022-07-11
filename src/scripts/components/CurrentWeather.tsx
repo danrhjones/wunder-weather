@@ -7,7 +7,7 @@ const convertToCelsius = (f: string | number) => {
   );
 };
 
-const convertToHpa = (f: number) => {
+const convertToHpa = (f: string | number) => {
     return (f / 0.029529980164712).toFixed(2)
 }
 
