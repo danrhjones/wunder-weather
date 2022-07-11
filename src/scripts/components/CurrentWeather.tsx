@@ -7,6 +7,10 @@ const convertToCelsius = (f: string | number) => {
   );
 };
 
+const convertToHpa = (f: number) => {
+    return (f / 0.029529980164712).toFixed(2)
+}
+
 type CurrentWeatherProps = {
   time?: Date;
   weather?: Weather;
@@ -247,7 +251,7 @@ const WeatherItem = (props: WeatherItemProps) => {
 
       {props.pressure ? (
         <>
-          <p>{`${props.pressure} in`}</p>
+          <p>{`${convertToHpa(props.pressure)} hPa`}</p>
         </>
       ) : null}
 
