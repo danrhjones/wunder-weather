@@ -185,8 +185,6 @@ const WeatherItem = (props: WeatherItemProps) => {
 
       {props.temp && props.tempFeel ? (
         <>
-            <p>{props.temp > 20 ?  'yikes' : 'nope'}</p>
-            <div style={isMarginNeeded ? {marginTop:10} : {}} />
             <p>{`${convertToCelsius(props.temp)}°C`}</p>
           <p>{`feels like ${convertToCelsius(
             props.temp
