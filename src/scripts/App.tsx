@@ -10,6 +10,7 @@ function App() {
   const [theme, setTheme] = useState<string>('theme-day-clear');
   // const [daytime, setDaytime] = useState<boolean>(true); // WIP idea to track sunrise/sunset
 
+
   const getCurrentWeather = () => {
     const key = process.env.API_KEY;
     const station = 'ILEIGH28';
@@ -38,7 +39,7 @@ function App() {
         <CurrentWeather/>
       </div>
     );
-  };
+  }
 
   console.log('🌦 Weather API from Wunderground:', weather); //to show dad how the data looks
   
@@ -67,6 +68,6 @@ function App() {
       />
     </div>
   );
-};
+}
 
 export default App;
