@@ -1,5 +1,6 @@
 import React from 'react';
 import { Weather } from '../../types';
+import {MoonModel} from "../../moonModel";
 
 const convertToCelsius = (f: string | number) => {
   return (
@@ -18,7 +19,9 @@ const convertInchesToMm = (f: string | number) => {
 type CurrentWeatherProps = {
   time?: Date;
   weather?: Weather;
+  moon?: MoonModel;
 };
+
 export default function CurrentWeather(props: CurrentWeatherProps) {
   if (!props.weather) {
     return (
@@ -31,6 +34,7 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
         <WeatherItemLoading icon='opacity' subject='Loading...' />
         <WeatherItemLoading icon='light_mode' subject='Loading...' />
         <WeatherItemLoading icon='speed' subject='Loading...' />
+        <WeatherItemLoading icon='dark_mode' subject='Loading...' />
       </div>
     );
   }
@@ -94,15 +98,21 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
         pressure={props.weather.imperial.pressure || '0'}
         unit='imperial'
       />
+      <WeatherItem
+        subject='Moon Phase'
+        icon='dark_mode'
+        moonPhase={ props.moon || 0}
+        unit='imperial'
+      />
     </div>
   );
 }
-
 
 type WeatherItemLoadingProps = {
   icon: string;
   subject: string;
 };
+
 const WeatherItemLoading = (props: WeatherItemLoadingProps) => {
   return (
     <div className='item'>
@@ -134,7 +144,9 @@ type WeatherItemProps = {
   windGust?: number | string;
   windSpeed?: number | string;
   windDir?: number;
+  moonPhase?: any
 };
+
 const WeatherItem = (props: WeatherItemProps) => {
   const windDirection = (dir: number) => {
     if ((dir > 349 && dir <= 360) || dir <= 11) {
@@ -173,7 +185,28 @@ const WeatherItem = (props: WeatherItemProps) => {
     return 'ERROR';
   };
 
-  return (
+  const moonPhaseIcon = (phase: number) => {
+    if (phase == 0) {
+        return 'New Moon';
+    } else if (phase > 0 && phase <= 0.24) {
+        return 'Waxing Cresent';
+    } else if (phase == 0.25 ) {
+        return 'First Quarter';
+    } else if (phase > 0.25 && phase <= 0.49) {
+        return 'Waxing Cresent';
+    } else if (phase == 0.5 ) {
+        return 'Full Moon';
+    } else if (phase > 0.5 && phase <= 0.74) {
+        return 'Waning Gibbous';
+    } else if (phase == 0.75 ) {
+        return 'Last Quarter';
+    } else if (phase > 0.75 && phase <= 0.99) {
+        return 'Waning Cresent';
+    }
+    return 'ERROR';
+};
+
+    return (
     <div className={props.error ? 'item itemError' : 'item'}>
       <h2>{props.subject}</h2>
       <span
@@ -237,6 +270,12 @@ const WeatherItem = (props: WeatherItemProps) => {
           <p>{`${convertToCelsius(props.dewPoint)}°C`}</p>
         </>
       ) : null}
+
+    {props.moonPhase ? (
+        <>
+            <p>{`${moonPhaseIcon(props.moonPhase)}`}</p>
+        </>
+    ) : null}
 
       {props.error ? <p className='itemErrorText'>{props.error}</p> : null}
     </div>
