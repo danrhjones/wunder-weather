@@ -4,10 +4,11 @@ orbs:
   slack: circleci/slack@4.12.0
 
 workflows:
-  default:
+  wunder-weather:
     jobs:
-      - linting
       - build-frontend
+      - linting:
+          requires: [build-frontend]
 
 node-python-docker-image: &node-python-docker-image
    docker:
@@ -22,19 +23,6 @@ commands:
           template: basic_fail_1
 
 jobs:
-  linting:
-    <<: *node-python-docker-image
-    steps:
-      - checkout
-      - run:
-          name: JS linting
-          command: |
-            npm install
-            npm run lint
-      - store_test_results:
-          path: reports/junit
-      - store_artifacts:
-          path: reports/junit
 
   build-frontend:
     <<: *node-python-docker-image
@@ -54,3 +42,16 @@ jobs:
           paths: [frontend/node_modules]
           key: frontend-build
       - notify-slack
+
+  linting:
+    <<: *node-python-docker-image
+    steps:
+      - checkout
+      - run:
+          name: JS linting
+          command: |
+            npm run lint
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
