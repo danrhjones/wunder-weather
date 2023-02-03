@@ -1,5 +1,7 @@
 FROM node:16
 
+WORKDIR /wunder-weather
+
 COPY . .
 
 RUN npm install &&\
