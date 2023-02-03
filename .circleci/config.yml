@@ -7,8 +7,9 @@ workflows:
   wunder-weather:
     jobs:
       - build-frontend
-      - linting:
-          requires: [build-frontend]
+      # - linting:
+          # requires: [build-frontend]
+      - publishLatestToHub
 
 node-python-docker-image: &node-python-docker-image
    docker:
@@ -63,3 +64,24 @@ jobs:
           path: reports/junit
       - store_artifacts:
           path: reports/junit
+
+  publishLatestToHub: 
+    docker:
+      - image: cimg/python:3.11.1-node
+        environment:
+          IMAGE_NAME: danrhjones/wunder-weather
+          DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
+          DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD
+    steps: 
+      - checkout
+      - setup_remote_docker
+      
+      - run: 
+          name: Build Docker Image
+          command: |
+            docker build -t $IMAGE_NAME .
+      - run: 
+          name: Publish Docker Image to Docker Hub
+          command: |
+            docker login -u "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_PASSWORD"
+            docker push $IMAGE_NAME:latest
