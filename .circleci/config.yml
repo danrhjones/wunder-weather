@@ -52,6 +52,7 @@ jobs:
       - run:
           name: JS linting
           command: |
+            npm install
             npm run lint
       - store_test_results:
           path: reports/junit
