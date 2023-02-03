@@ -2,8 +2,8 @@ import React from 'react';
 import { DateTime } from 'luxon';
 
 type CurrentWeatherProps = {
-  station?: string,
-  time?: Date,
+  station?: string;
+  time?: Date;
 }
 export default function CurrentWeather(props: CurrentWeatherProps) {
   const time = props.time
@@ -11,15 +11,15 @@ export default function CurrentWeather(props: CurrentWeatherProps) {
     : '';
   return (
     <header>
-        <h1>Pitstone</h1>
-        {props.station
-          ? <p>Weather Station: <a href={`https://www.wunderground.com/dashboard/pws/${props.station}`}>
-              {props.station}
-            </a>
-          </p>
-          : <p>Loading...</p>
-        }
-        <p>{time}</p>
-      </header>
+      <h1>Pitstone</h1>
+      {props.station
+        ? <p>Weather Station: <a href={`https://www.wunderground.com/dashboard/pws/${props.station}`}>
+          {props.station}
+        </a>
+        </p>
+        : <p>Loading...</p>
+      }
+      <p>{time}</p>
+    </header>
   );
-};
+}
