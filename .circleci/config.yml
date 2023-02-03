@@ -9,9 +9,9 @@ workflows:
       - linting
       - build-frontend
 
-node-docker-image: &node-docker-image
+node-python-docker-image: &node-python-docker-image
    docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/python:3.11.1-node
 
 commands:
   notify-slack:
@@ -23,7 +23,7 @@ commands:
 
 jobs:
   linting:
-    <<: *node-docker-image
+    <<: *node-python-docker-image
     steps:
       - checkout
       - run:
@@ -37,7 +37,7 @@ jobs:
           path: reports/junit
 
   build-frontend:
-    <<: *node-docker-image
+    <<: *node-python-docker-image
     steps:
       - checkout
       - restore_cache:
