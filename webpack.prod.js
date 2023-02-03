@@ -11,6 +11,11 @@ module.exports = merge(common, {
     filename: 'scripts/[name].bundle.js',
     path: path.resolve(__dirname, 'build'),
   },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+  },
   plugins: [
     new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),
