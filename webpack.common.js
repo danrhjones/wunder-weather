@@ -1,4 +1,4 @@
-const path = require('path');
+// const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -17,9 +17,6 @@ module.exports = {
       systemvars: true,
     }),
   ],
-  resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx']
-  },
   module: {
     rules: [
       {

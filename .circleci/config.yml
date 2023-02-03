@@ -1,0 +1,56 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@4.12.0
+
+workflows:
+  default:
+    jobs:
+      - linting
+      - build-frontend
+
+node-docker-image: &node-docker-image
+   docker:
+      - image: circleci/node:13.8.0
+
+commands:
+  notify-slack:
+    steps:
+      - slack/notify:
+          event: fail
+          channel: general
+          template: basic_fail_1
+
+jobs:
+  linting:
+    <<: *node-docker-image
+    steps:
+      - checkout
+      - run:
+          name: JS linting
+          command: |
+            npm run lint
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+
+  build-frontend:
+    <<: *node-docker-image
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: Install dependancies
+          command: |
+            npm install
+      - run:
+          name: Build front-end
+          command: |
+            cd frontend
+            npm run build
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-build
+      - notify-slack
