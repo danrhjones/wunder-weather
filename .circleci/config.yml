@@ -47,6 +47,8 @@ jobs:
     <<: *node-python-docker-image
     steps:
       - checkout
+      - restore_cache:
+          keys: [frontend-build]
       - run:
           name: JS linting
           command: |
