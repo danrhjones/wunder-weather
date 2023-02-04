@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.12.0
+  kubernetes: circleci/kubernetes@1.3.1
 
 workflows:
   wunder-weather:
@@ -10,10 +11,16 @@ workflows:
       # - linting:
           # requires: [build-frontend]
       - publishLatestToHub
+      - deploy:
+          requires: [publishLatestToHub]
 
 node-python-docker-image: &node-python-docker-image
    docker:
       - image: cimg/python:3.11.1-node
+
+aws-docker-image: &aws-docker-image
+   docker:
+      - image: cimg/aws:2022.11
 
 commands:
   notify-slack:
@@ -79,9 +86,21 @@ jobs:
       - run: 
           name: Build Docker Image
           command: |
-            docker build -t $IMAGE_NAME .
+            docker build -t $IMAGE_NAME:$CIRCLE_BUILD_NUM .
       - run: 
           name: Publish Docker Image to Docker Hub
           command: |
             docker login -u "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_PASSWORD"
-            docker push $IMAGE_NAME:latest
+            docker push $IMAGE_NAME:$CIRCLE_BUILD_NUM
+
+  deploy:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - kubernetes/install-kubectl
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: cloudformation/infra.yml
+          resource-name: deployment/nginx-deployment
+          show-kubectl-command: true
