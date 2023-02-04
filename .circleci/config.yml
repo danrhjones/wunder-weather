@@ -99,9 +99,13 @@ jobs:
     steps:
       - checkout
       - kubernetes/install-kubectl
-      - kubernetes/create-or-update-resource:
-          dry-run: server
-          get-rollout-status: true
-          resource-file-path: cloudformation/infra.yml
-          resource-name: deployment/nginx-deployment
-          show-kubectl-command: true
+      - run:
+          name: Connect to cluster
+          command: |
+            aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name wunder-weather
+      - run:
+          name: Deploy
+          command: |
+            kubectl create deployment wunder-weather --image=danrhjones/wunder-weather --replicas=2
+            kubectl expose deployment/wunder-weather --type="LoadBalancer" --port 8080
+            kubectl port-forward service/wunder-weather 8080:8080

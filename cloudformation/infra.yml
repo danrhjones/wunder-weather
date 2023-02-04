@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wunder-weather
+  name: wunderweather
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: wunder-weather
+      app: wunderweather
   template:
     metadata:
       labels:
-        app: wunder-weather
+        app: wunderweather
     spec:
       containers:
-      - name: wunder-weather
+      - name: wunderweather
         image: danrhjones/wunder-weather:${$CIRCLE_BUILD_NUM}
         imagePullPolicy: Always
         ports:
@@ -26,10 +26,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: wunder-weather
+  name: wunderweather
 spec:
   ports:
   - port: 8080
     targetPort: 8080
   selector:
-    app: wunder-weather
+    app: wunderweather
